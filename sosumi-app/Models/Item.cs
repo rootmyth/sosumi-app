@@ -2,10 +2,10 @@
 {
     public class Item
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public double price { get; set; }
-        public bool special { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public bool Special { get; set; }
         
     }
 }
