@@ -5,10 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>sosumi_app</RootNamespace>
+    <UserSecretsId>a5005e25-f836-41b4-8396-d5ea4a411c51</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.4" />
   </ItemGroup>
 
   <ItemGroup>
