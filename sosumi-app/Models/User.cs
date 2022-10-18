@@ -2,14 +2,14 @@
 {
     public class User
     {
-        private int id { get; set; }
-        private string firstName { get; set; }
-        private string lastName { get; set; }
-        private string email { get; set; } 
-        private string password { get; set; }
-        private string address { get; set; }
-        private bool firstTime { get; set; }
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Address { get; set; }
+        public bool FirstTime { get; set; }
 
-        public List<Item> favorites;
+        public List<Item> Favorites { get; set; }
     }
 }
