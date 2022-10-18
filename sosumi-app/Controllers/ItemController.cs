@@ -9,6 +9,7 @@ namespace sosumi_app.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
+
         private IItemRepository _itemRepo;
 
         public ItemController(IItemRepository itemRepo)

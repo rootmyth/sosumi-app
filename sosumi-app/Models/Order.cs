@@ -2,10 +2,10 @@
 {
     public class Order
     {
-        private int orderId { get; set; }
-        private int userId { get; set; }
-        private DateTime date { get; set; }
-        private bool delivery { get; set; }
-        private bool paid { get; set; }
+        public int orderId { get; set; }
+        public int userId { get; set; }
+        public DateTime date { get; set; }
+        public bool delivery { get; set; }
+        public bool paid { get; set; }
     }
 }
