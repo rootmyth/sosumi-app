@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sosumi_app.Interfaces;
+using sosumi_app.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,9 +19,9 @@ namespace sosumi_app.Controllers
         }
         // GET: api/<ItemController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<Item> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _itemRepo.GetAllItems();
         }
 
         // GET api/<ItemController>/5
