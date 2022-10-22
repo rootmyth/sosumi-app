@@ -24,6 +24,13 @@ namespace sosumi_app.Controllers
             return _itemRepo.GetAllItems();
         }
 
+        // GET: api/<ItemController>
+        [HttpGet("special")]
+        public List<Item> GetSpecials()
+        {
+            return _itemRepo.GetSpecials();
+        }
+
         // GET api/<ItemController>/5
         [HttpGet("{id}")]
         public string Get(int id)
