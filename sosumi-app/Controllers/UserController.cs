@@ -24,9 +24,9 @@ namespace sosumi_app.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public User Get(int id)
         {
-            return "value";
+            return _userRepo.GetUserById(id);
         }
 
         [HttpGet("favorites/{id}")]
