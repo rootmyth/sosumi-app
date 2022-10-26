@@ -32,6 +32,7 @@ namespace sosumi_app.Repositories
                                 SELECT *
                                 FROM [order]
                                 WHERE userId = @id
+                                AND paid = 1
                             ";
                     cmd.Parameters.AddWithValue("@id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
