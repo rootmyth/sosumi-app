@@ -20,6 +20,46 @@ namespace sosumi_app.Repositories
                 return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
             }
         }
+        public User GetUserById(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [user]
+                                WHERE id = @id
+                            ";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        
+                        if (reader.Read())
+                        {
+                            User user = new User()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                Email = reader.GetString(reader.GetOrdinal("Email")),
+                                Password = reader.GetString(reader.GetOrdinal("Password")),
+                                Address = reader.GetString(reader.GetOrdinal("Address")),
+                                FirstTime = reader.GetBoolean(reader.GetOrdinal("FirstTime"))
+                            };
+                            
+                            return user;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+        }
         public List<Item> GetFavoritesByUserId(int id)
         {
             using (SqlConnection conn = Connection)
