@@ -94,45 +94,6 @@ namespace sosumi_app.Repositories
                 }
             }
         }
-        public User GetUnpaidUser(string userId)
-        {
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-
-                using (SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                        SELECT *
-                        FROM [Users]
-                        WHERE paid4 = 0
-                                        ";
-
-                    cmd.Parameters.AddWithValue("@userId", userId);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            User user = new User()
-                            {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                FirstName = reader.GetString(reader.GetOrdinal("firstName")),
-                                LastName = reader.GetString(reader.GetOrdinal("lastName")),
-                                Email = reader.GetString(reader.GetOrdinal("email")),
-                                Password = reader.GetString(reader.GetOrdinal("password")),
-                                Address = reader.GetString(reader.GetOrdinal("adress")),
-                                FirstTime = reader.GetBoolean(reader.GetOrdinal("firstTime"))
-
-                            };
-
-                            return user;
-                        }
-
-                        return null;
-                    }
-                }
-            }
-        }
+      
     }
 }
