@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sosumi_app.Interfaces;
+using sosumi_app.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,9 +24,9 @@ namespace sosumi_app.Controllers
 
         // GET api/<OrderController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public List<Order> Get(int id)
         {
-            return "value";
+            return _orderRepo.GetOrdersByUserId(id);
         }
 
         // POST api/<OrderController>

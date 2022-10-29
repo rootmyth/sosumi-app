@@ -53,5 +53,38 @@ namespace sosumi_app.Repositories
             }
             
         }
+
+        public List<Item> GetSpecials()
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM item
+                                WHERE special=1
+                            ";
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<Item> items = new List<Item>();
+                        while (reader.Read())
+                        {
+                            Item item = new Item()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                                Price = reader.GetDouble(reader.GetOrdinal("Price")),
+                                Special = reader.GetBoolean(reader.GetOrdinal("Special"))
+                            };
+                            items.Add(item);
+                        }
+                        return items;
+                    }
+                }
+            }
+
+        }
     }
 }

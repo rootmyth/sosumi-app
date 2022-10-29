@@ -4,6 +4,8 @@ namespace sosumi_app.Interfaces
 {
     public interface IItemRepository
     {
-        List<Item> GetAllItems();
+        public List<Item> GetAllItems();
+
+        public List<Item> GetSpecials();
     }
 }

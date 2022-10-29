@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sosumi_app.Interfaces;
+using sosumi_app.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,9 +24,15 @@ namespace sosumi_app.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public User Get(int id)
         {
-            return "value";
+            return _userRepo.GetUserById(id);
+        }
+
+        [HttpGet("favorites/{id}")]
+        public List<Item> GetFavoritesByUserId(int id)
+        {
+            return _userRepo.GetFavoritesByUserId(id);
         }
 
         // POST api/<UserController>
