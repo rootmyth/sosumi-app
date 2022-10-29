@@ -17,13 +17,13 @@ namespace sosumi_app.Controllers
         }
         // GET: api/<OrderController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<Order> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _orderRepo.GetAllOrders();
         }
 
         // GET api/<OrderController>/5
-        [HttpGet("{id}")]
+        [HttpGet("user{id}")]
         public List<Order> Get(int id)
         {
             return _orderRepo.GetOrdersByUserId(id);
@@ -31,8 +31,16 @@ namespace sosumi_app.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(Order order)
         {
+            try
+            {
+                _orderRepo.AddOrder(order);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         // PUT api/<OrderController>/5

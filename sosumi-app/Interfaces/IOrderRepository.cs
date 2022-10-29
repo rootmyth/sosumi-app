@@ -5,5 +5,7 @@ namespace sosumi_app.Interfaces
     public interface IOrderRepository
     {
         List<Order> GetOrdersByUserId(int id);
-     }
+        void AddOrder(Order order);
+        List<Order> GetAllOrders();
+    }
 }
