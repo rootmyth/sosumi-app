@@ -7,5 +7,8 @@ namespace sosumi_app.Interfaces
         List<Order> GetOrdersByUserId(int id);
         void AddOrder(Order order);
         List<Order> GetAllOrders();
+
+        List<Order> GetCartByUserId(int id);
+
     }
 }
