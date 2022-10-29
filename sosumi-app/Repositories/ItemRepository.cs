@@ -1,8 +1,7 @@
 ﻿using sosumi_app.Interfaces;
 using sosumi_app.Models;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-
 
 namespace sosumi_app.Repositories
 {
