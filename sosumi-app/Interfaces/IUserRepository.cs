@@ -6,5 +6,6 @@ namespace sosumi_app.Interfaces
     {
         User GetUserById(int id);
         List<Item> GetFavoritesByUserId(int id);
+        void CreateUser(User user);
     }
 }

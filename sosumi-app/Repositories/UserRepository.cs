@@ -46,8 +46,8 @@ namespace sosumi_app.Repositories
                                 LastName = reader.GetString(reader.GetOrdinal("LastName")),
                                 Email = reader.GetString(reader.GetOrdinal("Email")),
                                 Password = reader.GetString(reader.GetOrdinal("Password")),
-                                Address = reader.GetString(reader.GetOrdinal("Address")),
-                                FirstTime = reader.GetBoolean(reader.GetOrdinal("FirstTime"))
+                                //Address = reader.GetString(reader.GetOrdinal("Address")),
+                                //FirstTime = reader.GetBoolean(reader.GetOrdinal("FirstTime"))
                             };
                             
                             return user;
@@ -91,6 +91,28 @@ namespace sosumi_app.Repositories
                         }
                         return items;
                     }
+                }
+            }
+        }
+
+        public void CreateUser(User user)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                INSERT INTO [user](firstName, lastName, email, password)
+                                VALUES(@firstname, @lastname, @email, @password);
+                            ";
+
+                    cmd.Parameters.AddWithValue("@firstname", user.FirstName);
+                    cmd.Parameters.AddWithValue("@lastname", user.LastName);
+                    cmd.Parameters.AddWithValue("@email", user.Email);
+                    cmd.Parameters.AddWithValue("@password", user.Password);
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
