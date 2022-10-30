@@ -37,8 +37,16 @@ namespace sosumi_app.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(User user)
         {
+            try
+            {
+                _userRepo.CreateUser(user);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         // PUT api/<UserController>/5
