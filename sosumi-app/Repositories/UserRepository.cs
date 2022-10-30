@@ -95,6 +95,7 @@ namespace sosumi_app.Repositories
             }
         }
 
+
         public void CreateUser(User user)
         {
             using (SqlConnection conn = Connection)
@@ -116,5 +117,6 @@ namespace sosumi_app.Repositories
                 }
             }
         }
+
     }
 }
