@@ -35,6 +35,9 @@ namespace sosumi_app.Controllers
         {
             try
             {
+                //check if current order exists for user
+                //if not, create new order not paid
+                //add orderid and item id to orderItem table
                 _orderRepo.AddOrder(order);
             }
             catch(Exception e)

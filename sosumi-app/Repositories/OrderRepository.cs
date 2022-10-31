@@ -36,7 +36,7 @@ namespace sosumi_app.Repositories
                     cmd.Parameters.AddWithValue("@userid", order.UserId);
                     cmd.Parameters.AddWithValue("@date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@delivery", order.Delivery);
-                    cmd.Parameters.AddWithValue("@paid", order.Paid);
+                    cmd.Parameters.AddWithValue("@paid", true);
 
                     cmd.ExecuteNonQuery();
                 }
