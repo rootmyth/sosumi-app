@@ -97,7 +97,43 @@ namespace sosumi_app.Repositories
                         {
                             Order order = new Order()
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("orderId")),
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                UserId = reader.GetInt32(reader.GetOrdinal("userId")),
+                                Date = reader.GetDateTime(reader.GetOrdinal("date")),
+                                Delivery = reader.GetBoolean(reader.GetOrdinal("dineIn")),
+                                Paid = reader.GetBoolean(reader.GetOrdinal("paid"))
+                            };
+                            orders.Add(order);
+                        }
+                        return orders;
+                    }
+                }
+            }
+
+        }
+
+        public List<Order> GetCartByUserId(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [order]
+                                WHERE userId = @id
+                                AND paid = 0
+                            ";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<Order> orders = new List<Order>();
+                        while (reader.Read())
+                        {
+                            Order order = new Order()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
                                 UserId = reader.GetInt32(reader.GetOrdinal("userId")),
                                 Date = reader.GetDateTime(reader.GetOrdinal("date")),
                                 Delivery = reader.GetBoolean(reader.GetOrdinal("dineIn")),

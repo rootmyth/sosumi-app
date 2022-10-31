@@ -29,6 +29,13 @@ namespace sosumi_app.Controllers
             return _orderRepo.GetOrdersByUserId(id);
         }
 
+        // GET api/<OrderController>/5
+        [HttpGet("user{id}/cart")]
+        public List<Order> GetCart(int id)
+        {
+            return _orderRepo.GetCartByUserId(id);
+        }
+
         // POST api/<OrderController>
         [HttpPost]
         public void Post(Order order)
