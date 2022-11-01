@@ -45,6 +45,13 @@ namespace sosumi_app.Controllers
             return _orderRepo.GetCartByUserId(id);
         }
 
+        [HttpPut("checkout/{userid}")]
+        public void Checkout(int userid)
+        {
+            int orderId = _orderRepo.GetCartByUserId(userid)[0].Id;
+            _orderRepo.Checkout(orderId);
+        }
+
         // POST api/<OrderController>
         [HttpPost("{id}/{itemId}")]
         public void Post(int id, int itemId)

@@ -279,5 +279,26 @@ namespace sosumi_app.Repositories
                 }
             }
         }
+
+        public void Checkout(int orderId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE [order]
+                                SET paid = 1
+                                WHERE orderId = @orderId
+                                AND paid = 0
+                            ";
+
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

@@ -14,5 +14,6 @@ namespace sosumi_app.Interfaces
         void AddOrderToOrderItem(int orderId, int itemId, int quantity);
         void AddOrderToOrderItem(int orderId, int itemId);
         void RemoveItemFromCart(int orderId, int itemId);
+        void Checkout(int orderId);
     }
 }
