@@ -20,9 +20,9 @@ namespace sosumi_app.Controllers
         // GET: api/<FavoriteController>
         [HttpGet]
 
-        public Dictionary<int, int> GetFavoritesSortedByMostPopular()
+        public List<Item> GetFavorites()
         {
-            return _favoriteRepo.GetAllFavorites();
+            return _favoriteRepo.GetTopFiveFavorites();
         }
 
         // GET api/<FavoriteController>/5
