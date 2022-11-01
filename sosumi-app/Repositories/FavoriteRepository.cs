@@ -52,5 +52,24 @@ namespace sosumi_app.Repositories
             }
 
         }
+        public void DeleteFavorite(int user_Id, int item_Id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"                              
+                                DELETE FROM favorite
+                                WHERE userID = @user_Id AND itemID = @item_Id
+                            ";
+                    using (SqlDataReader reader = cmd.ExecuteReader());
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+
+        }
     }
 }
