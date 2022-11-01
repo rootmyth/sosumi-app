@@ -12,7 +12,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IItemRepository, ItemRepository>();
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
-builder.Services.AddTransient<ICartRepository, CartRepository>();
 
 var app = builder.Build();
 

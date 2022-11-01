@@ -21,7 +21,7 @@ namespace sosumi_app.Repositories
             }
         }
 
-        public void AddOrder(Order order)
+        public void AddOrder(int id)
         {
             using (SqlConnection conn = Connection)
             {
@@ -33,17 +33,17 @@ namespace sosumi_app.Repositories
                                 VALUES(@userid, @date, @delivery, @paid);
                             ";
                     
-                    cmd.Parameters.AddWithValue("@userid", order.UserId);
+                    cmd.Parameters.AddWithValue("@userid", id);
                     cmd.Parameters.AddWithValue("@date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@delivery", order.Delivery);
-                    cmd.Parameters.AddWithValue("@paid", true);
+                    cmd.Parameters.AddWithValue("@delivery", 0);
+                    cmd.Parameters.AddWithValue("@paid", false);
 
                     cmd.ExecuteNonQuery();
                 }
             }
         }
 
-        public List<Order> GetAllOrders()
+        public List<Order> GetOrderItem()
         {
             using (SqlConnection conn = Connection)
             {
@@ -133,7 +133,7 @@ namespace sosumi_app.Repositories
                         {
                             Order order = new Order()
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Id = reader.GetInt32(reader.GetOrdinal("orderId")),
                                 UserId = reader.GetInt32(reader.GetOrdinal("userId")),
                                 Date = reader.GetDateTime(reader.GetOrdinal("date")),
                                 Delivery = reader.GetBoolean(reader.GetOrdinal("dineIn")),
@@ -146,6 +146,138 @@ namespace sosumi_app.Repositories
                 }
             }
 
+        }
+
+        public void AddOrderToOrderItem(int orderId, int itemId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                INSERT INTO [orderItem]
+                                VALUES(@orderId, @itemId, @quantity);
+                            ";
+
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@itemId", itemId);
+                    cmd.Parameters.AddWithValue("@quantity", 1);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+       
+        public void AddOrderToOrderItem(int orderId, int itemId, int quantity)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE [orderItem]
+                                SET quantity = @quantity
+                                WHERE orderId = @orderId
+                                AND itemId = @itemId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@itemId", itemId);
+                    cmd.Parameters.AddWithValue("@quantity", quantity + 1);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<OrderItem> GetOrderItemTable()
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [orderItem]
+                            ";
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<OrderItem> orders = new List<OrderItem>();
+                        while (reader.Read())
+                        {
+                            OrderItem orderitem = new OrderItem()
+                            {
+                                orderId = reader.GetInt32(reader.GetOrdinal("orderId")),
+                                itemId = reader.GetInt32(reader.GetOrdinal("itemId")),
+                                quantity = reader.GetInt32(reader.GetOrdinal("quantity"))
+                            };
+                            orders.Add(orderitem);
+                        }
+                        return orders;
+                    }
+                }
+            }
+        }
+
+        public int CheckForItemInCart(int orderId, int itemId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [orderItem]
+                                WHERE orderId = @orderId
+                                AND itemId = @itemId
+                            ";
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@itemId", itemId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return reader.GetInt32(reader.GetOrdinal("quantity"));
+                        }
+                        return 0;  
+                    }
+                }
+            }
+        }
+
+        public void deleteItemFromCart(int orderId, int itemId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveItemFromCart(int orderId, int itemId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                UPDATE [orderItem]
+                                SET quantity = @quantity
+                                WHERE orderId = @orderId
+                                AND itemId = @itemId
+                            ";
+
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@itemId", itemId);
+                    cmd.Parameters.AddWithValue("@quantity", CheckForItemInCart(orderId, itemId) - 1);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
