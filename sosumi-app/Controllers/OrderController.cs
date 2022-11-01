@@ -19,7 +19,16 @@ namespace sosumi_app.Controllers
         [HttpGet]
         public List<Order> Get()
         {
-            return _orderRepo.GetAllOrders();
+            return _orderRepo.GetOrderItem();
+        }
+
+
+        [HttpGet("getOrderItem")]
+        public List<OrderItem> GetOrderItem()
+        {
+            return _orderRepo.GetOrderItemTable();
+            //add qantinty
+
         }
 
         // GET api/<OrderController>/5
@@ -37,29 +46,37 @@ namespace sosumi_app.Controllers
         }
 
         // POST api/<OrderController>
-        [HttpPost]
-        public void Post(Order order)
+        [HttpPost("{id}/{itemId}")]
+        public void Post(int id, int itemId)
         {
-            try
+            if(!(_orderRepo.GetCartByUserId(id).Count > 0))
             {
-                _orderRepo.AddOrder(order);
+                _orderRepo.AddOrder(id);
             }
-            catch(Exception e)
+            int orderId = _orderRepo.GetCartByUserId(id)[0].Id;
+            int quantity = _orderRepo.CheckForItemInCart(orderId, itemId);
+            if(quantity == 0)
             {
-                Console.WriteLine(e.Message);
+                _orderRepo.AddOrderToOrderItem(orderId, itemId);
+            } else
+            {
+                _orderRepo.AddOrderToOrderItem(orderId, itemId, quantity);
             }
         }
 
         // PUT api/<OrderController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost("decrementQuantity/{userId}/{itemId}")]
+        public void Put(int userId, int itemId)
         {
+            int orderId = _orderRepo.GetCartByUserId(userId)[0].Id;
+            _orderRepo.RemoveItemFromCart(orderId, itemId);
         }
 
         // DELETE api/<OrderController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{userId}/{itemId}")]
+        public void Delete(int userId, int itemId)
         {
+            
         }
     }
 }
