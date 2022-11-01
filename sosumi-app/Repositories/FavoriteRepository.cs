@@ -20,7 +20,7 @@ namespace sosumi_app.Repositories
                 return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
             }
         }
-        public Dictionary<int, int> GetAllFavorites()
+        public List<Item> GetTopFiveFavorites()
         {
             using (SqlConnection conn = Connection)
             {
@@ -28,29 +28,41 @@ namespace sosumi_app.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                SELECT itemId, 
-                                COUNT(*) AS [count]
-                                FROM favorite
-                                GROUP BY itemId
-                            ";
+                                    SELECT TOP 5 
+                                        id,
+	                                    [name],
+	                                    price,
+	                                    special,
+	                                    [type],
+	                                    COUNT(f.itemId) AS [count]
+                                    FROM item i
+                                    JOIN favorite f
+                                    ON f.itemId = i.id
+                                    GROUP BY i.id, i.[name], i.price, i.special, i.[type]
+                                    ORDER BY [count] DESC
+                    ";
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        Dictionary<int, int> favorites = new Dictionary<int, int>();
-                        
+                        List<Item> topFiveFavorites = new List<Item>();
+
                         while (reader.Read())
                         {
-                            int itemId = reader.GetInt32(reader.GetOrdinal("itemId"));
-                            int count = reader.GetInt32(reader.GetOrdinal("count"));
-                            
-                            favorites.Add(itemId, count);
-                            
+                            Item favorite = new Item()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("id")),
+                                Name = reader.GetString(reader.GetOrdinal("name")),
+                                Price = reader.GetDouble(reader.GetOrdinal("price")),
+                                Special = reader.GetBoolean(reader.GetOrdinal("special")),
+                                Type = reader.GetString(reader.GetOrdinal("type"))
+
+                            };
+
+                            topFiveFavorites.Add(favorite);
                         }
-                        Dictionary<int, int> sortedFavorites = favorites.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-                        return sortedFavorites;
+                        return topFiveFavorites;
                     }
                 }
             }
-
         }
     }
 }
