@@ -62,7 +62,7 @@ namespace sosumi_app.Repositories
                         {
                             Order order = new Order()
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("orderId")),
+                                Id = reader.GetInt32(reader.GetOrdinal("id")),
                                 UserId = reader.GetInt32(reader.GetOrdinal("userId")),
                                 Date = reader.GetDateTime(reader.GetOrdinal("date")),
                                 Delivery = reader.GetBoolean(reader.GetOrdinal("dineIn")),
@@ -133,7 +133,7 @@ namespace sosumi_app.Repositories
                         {
                             Order order = new Order()
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("orderId")),
+                                Id = reader.GetInt32(reader.GetOrdinal("id")),
                                 UserId = reader.GetInt32(reader.GetOrdinal("userId")),
                                 Date = reader.GetDateTime(reader.GetOrdinal("date")),
                                 Delivery = reader.GetBoolean(reader.GetOrdinal("dineIn")),
@@ -157,10 +157,10 @@ namespace sosumi_app.Repositories
                 {
                     cmd.CommandText = @"
                                 INSERT INTO [orderItem]
-                                VALUES(@orderId, @itemId, @quantity);
+                                VALUES(@id, @itemId, @quantity);
                             ";
 
-                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@id", orderId);
                     cmd.Parameters.AddWithValue("@itemId", itemId);
                     cmd.Parameters.AddWithValue("@quantity", 1);
 
@@ -180,11 +180,11 @@ namespace sosumi_app.Repositories
                     cmd.CommandText = @"
                                 UPDATE [orderItem]
                                 SET quantity = @quantity
-                                WHERE orderId = @orderId
+                                WHERE id = @id
                                 AND itemId = @itemId
                             ";
 
-                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@id", orderId);
                     cmd.Parameters.AddWithValue("@itemId", itemId);
                     cmd.Parameters.AddWithValue("@quantity", quantity + 1);
 
@@ -212,7 +212,7 @@ namespace sosumi_app.Repositories
                         {
                             OrderItem orderitem = new OrderItem()
                             {
-                                orderId = reader.GetInt32(reader.GetOrdinal("orderId")),
+                                orderId = reader.GetInt32(reader.GetOrdinal("id")),
                                 itemId = reader.GetInt32(reader.GetOrdinal("itemId")),
                                 quantity = reader.GetInt32(reader.GetOrdinal("quantity"))
                             };
@@ -234,10 +234,10 @@ namespace sosumi_app.Repositories
                     cmd.CommandText = @"
                                 SELECT *
                                 FROM [orderItem]
-                                WHERE orderId = @orderId
+                                WHERE id = @id
                                 AND itemId = @itemId
                             ";
-                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@id", orderId);
                     cmd.Parameters.AddWithValue("@itemId", itemId);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -267,11 +267,11 @@ namespace sosumi_app.Repositories
                     cmd.CommandText = @"
                                 UPDATE [orderItem]
                                 SET quantity = @quantity
-                                WHERE orderId = @orderId
+                                WHERE id = @id
                                 AND itemId = @itemId
                             ";
 
-                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@id", orderId);
                     cmd.Parameters.AddWithValue("@itemId", itemId);
                     cmd.Parameters.AddWithValue("@quantity", CheckForItemInCart(orderId, itemId) - 1);
 
@@ -290,11 +290,11 @@ namespace sosumi_app.Repositories
                     cmd.CommandText = @"
                                 UPDATE [order]
                                 SET paid = 1
-                                WHERE orderId = @orderId
+                                WHERE id = @id
                                 AND paid = 0
                             ";
 
-                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    cmd.Parameters.AddWithValue("@id", orderId);
 
                     cmd.ExecuteNonQuery();
                 }
