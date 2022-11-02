@@ -27,8 +27,6 @@ namespace sosumi_app.Controllers
         public List<OrderItem> GetOrderItem()
         {
             return _orderRepo.GetOrderItemTable();
-            //add qantinty
-
         }
 
         // GET api/<OrderController>/5
@@ -77,13 +75,6 @@ namespace sosumi_app.Controllers
         {
             int orderId = _orderRepo.GetCartByUserId(userId)[0].Id;
             _orderRepo.RemoveItemFromCart(orderId, itemId);
-        }
-
-        // DELETE api/<OrderController>/5
-        [HttpDelete("{userId}/{itemId}")]
-        public void Delete(int userId, int itemId)
-        {
-            
         }
     }
 }

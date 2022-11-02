@@ -25,24 +25,11 @@ namespace sosumi_app.Controllers
             return _favoriteRepo.GetTopFiveFavorites();
         }
 
-        // GET api/<FavoriteController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<FavoriteController>
         [HttpPost("addFavorite/{userid}/{itemid}")]
         public void Post(int userid, int itemid)
         {
             _favoriteRepo.AddFavorite(userid, itemid);
-        }
-
-        // PUT api/<FavoriteController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
         }
 
         // DELETE api/<FavoriteController>/5
