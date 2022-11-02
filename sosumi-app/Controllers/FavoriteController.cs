@@ -33,9 +33,10 @@ namespace sosumi_app.Controllers
         }
 
         // POST api/<FavoriteController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("addFavorite/{userid}/{itemid}")]
+        public void Post(int userid, int itemid)
         {
+            _favoriteRepo.AddFavorite(userid, itemid);
         }
 
         // PUT api/<FavoriteController>/5
@@ -45,7 +46,7 @@ namespace sosumi_app.Controllers
         }
 
         // DELETE api/<FavoriteController>/5
-        [HttpDelete("{userid}/{itemid}")]
+        [HttpDelete("deleteFavorite/{userid}/{itemid}")]
         public void Delete(int userid, int itemid)
         {
             _favoriteRepo.RemoveFavorite(userid, itemid);

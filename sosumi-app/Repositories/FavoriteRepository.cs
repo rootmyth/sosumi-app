@@ -20,6 +20,27 @@ namespace sosumi_app.Repositories
                 return new SqlConnection(_config.GetConnectionString("DefaultConnection"));
             }
         }
+
+        public void AddFavorite(int userid, int itemid)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                INSERT INTO [favorite]
+                                VALUES(@userid, @itemid)
+                            ";
+
+                    cmd.Parameters.AddWithValue("@itemid", itemid);
+                    cmd.Parameters.AddWithValue("@userid", userid);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public List<Item> GetTopFiveFavorites()
         {
             using (SqlConnection conn = Connection)

@@ -6,5 +6,6 @@ namespace sosumi_app.Interfaces
     {
         List<Item> GetTopFiveFavorites();
         void RemoveFavorite(int userid, int itemid);
+        void AddFavorite(int userid, int itemid);
     }
 }
