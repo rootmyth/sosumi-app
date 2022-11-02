@@ -45,9 +45,10 @@ namespace sosumi_app.Controllers
         }
 
         // DELETE api/<FavoriteController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{userid}/{itemid}")]
+        public void Delete(int userid, int itemid)
         {
+            _favoriteRepo.RemoveFavorite(userid, itemid);
         }
     }
 }

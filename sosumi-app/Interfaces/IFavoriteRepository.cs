@@ -5,5 +5,6 @@ namespace sosumi_app.Interfaces
     public interface IFavoriteRepository
     {
         List<Item> GetTopFiveFavorites();
+        void RemoveFavorite(int userid, int itemid);
     }
 }
