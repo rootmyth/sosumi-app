@@ -95,7 +95,7 @@ namespace sosumi_app.Repositories
                 {
                     cmd.CommandText = @"
                                 DELETE FROM [favorite]
-                                WHERE foodId = @itemid
+                                WHERE itemId = @itemid
                                 AND userId = @userid
                             ";
 

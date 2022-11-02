@@ -212,7 +212,7 @@ namespace sosumi_app.Repositories
                         {
                             OrderItem orderitem = new OrderItem()
                             {
-                                orderId = reader.GetInt32(reader.GetOrdinal("id")),
+                                orderId = reader.GetInt32(reader.GetOrdinal("orderId")),
                                 itemId = reader.GetInt32(reader.GetOrdinal("itemId")),
                                 quantity = reader.GetInt32(reader.GetOrdinal("quantity"))
                             };
@@ -234,7 +234,7 @@ namespace sosumi_app.Repositories
                     cmd.CommandText = @"
                                 SELECT *
                                 FROM [orderItem]
-                                WHERE id = @id
+                                WHERE orderId = @id
                                 AND itemId = @itemId
                             ";
                     cmd.Parameters.AddWithValue("@id", orderId);
@@ -267,11 +267,11 @@ namespace sosumi_app.Repositories
                     cmd.CommandText = @"
                                 UPDATE [orderItem]
                                 SET quantity = @quantity
-                                WHERE id = @id
+                                WHERE orderId = @orderId
                                 AND itemId = @itemId
                             ";
 
-                    cmd.Parameters.AddWithValue("@id", orderId);
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
                     cmd.Parameters.AddWithValue("@itemId", itemId);
                     cmd.Parameters.AddWithValue("@quantity", CheckForItemInCart(orderId, itemId) - 1);
 
