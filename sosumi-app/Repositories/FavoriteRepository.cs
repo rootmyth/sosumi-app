@@ -52,5 +52,24 @@ namespace sosumi_app.Repositories
             }
 
         }
+
+        public void DeleteFavorite(int userId, int orderId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM favorite
+                                        WHERE userId = @userId
+                                        AND foodId = @orderId";
+
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
