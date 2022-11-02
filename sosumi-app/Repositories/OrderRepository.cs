@@ -180,7 +180,7 @@ namespace sosumi_app.Repositories
                     cmd.CommandText = @"
                                 UPDATE [orderItem]
                                 SET quantity = @quantity
-                                WHERE id = @id
+                                WHERE orderId = @id
                                 AND itemId = @itemId
                             ";
 
@@ -234,7 +234,7 @@ namespace sosumi_app.Repositories
                     cmd.CommandText = @"
                                 SELECT *
                                 FROM [orderItem]
-                                WHERE id = @id
+                                WHERE orderId = @id
                                 AND itemId = @itemId
                             ";
                     cmd.Parameters.AddWithValue("@id", orderId);
@@ -267,7 +267,7 @@ namespace sosumi_app.Repositories
                     cmd.CommandText = @"
                                 UPDATE [orderItem]
                                 SET quantity = @quantity
-                                WHERE id = @id
+                                WHERE orderId = @id
                                 AND itemId = @itemId
                             ";
 
