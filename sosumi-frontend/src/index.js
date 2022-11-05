@@ -6,6 +6,7 @@ import Initialize from './Initialize';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from './utils/context/authContext';
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>
