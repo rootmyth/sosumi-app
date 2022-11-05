@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using sosumi_app.Interfaces;
 using sosumi_app.Models;
 
@@ -16,9 +17,13 @@ namespace sosumi_app.Controllers
             _orderRepo = orderRepository;
         }
         // GET: api/<OrderController>
+        
         [HttpGet]
         public List<Order> Get()
         {
+            var user = User;
+            
+
             return _orderRepo.GetOrderItem();
         }
 

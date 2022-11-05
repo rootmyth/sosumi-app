@@ -1,7 +1,26 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using sosumi_app.Interfaces;
 using sosumi_app.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var firebaseProjectId = builder.Configuration.GetValue<string>("Authentication:Firebase:ProjectId");
+var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = googleTokenUrl;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = googleTokenUrl,
+            ValidateAudience = true,
+            ValidAudience = firebaseProjectId,
+            ValidateLifetime = true
+        };
+    });
 
 // Add services to the container.
 
@@ -24,6 +43,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
