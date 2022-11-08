@@ -21,7 +21,8 @@ namespace sosumi_app.Controllers
         [HttpGet]
         public List<Item> Get()
         {
-            return _itemRepo.GetAllItems();
+            var returnVar = _itemRepo.GetAllItems();
+            return returnVar;
         }
 
         // GET: api/<ItemController>
