@@ -4,9 +4,6 @@
     display: flex;
     justify-content: start;
     align-items: center;
-    /* font-size: 1rem;
-    padding-top: 10px;
-    padding-bottom: 10px; */
 }
  .menu-bars {
     margin-left: 2rem;
@@ -72,3 +69,24 @@
  span {
     margin-left: 16px;
  }
+
+h2 {
+    color: aliceblue;
+}
+
+.user-menu.active {
+   right: 0;
+   transition: 350ms;
+}
+
+.user-menu {
+   background-color: rgb(21, 21, 75);
+   width: 250px;
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   position: fixed;
+   top: 0;
+   right: -100%;
+   transition: 850ms;
+}
