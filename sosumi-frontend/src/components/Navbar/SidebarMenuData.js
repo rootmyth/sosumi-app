@@ -5,7 +5,7 @@ import {MdMenuBook} from "react-icons/md"
 export const SidebarMenuData = [
   {
     title: 'Menu',
-    path: './',
+    path: './menu',
     icon: <MdMenuBook />,
     className: 'nav-text'
   },
@@ -17,7 +17,7 @@ export const SidebarMenuData = [
   },
   {
     title: 'Specials',
-    path: './speicals',
+    path: './specials',
     icon: <AiOutlineStar />,
     className: 'nav-text'
   },
