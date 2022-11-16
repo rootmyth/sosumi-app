@@ -18,7 +18,7 @@ export default function Specials() {
           .then((res) => res.json())
           .then((r) => {
             setItems(r);
-            console.table(r);
+            //console.table(r);
           });
       }, []);
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Authenticated from '../pages/Authenticated';
-import Navbar from '../components/Navbar/navbar'
+import Navbar from '../components/Navbar/Navbar'
 import Specials from '../pages/Specials'
 import Menu from '../pages/Menu'
 
