@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from 'react'
+import { FaStar } from 'react-icons/fa';
 import '../styles/item.css'
 
-export default function Item({item, favorited}) {
-    const {name, price} = item;
-    const [fav, setFav] = useState(favorited);
-    
-    const handleOnClick = () => {
-      if(fav){
-        fetch(
-          'https://localhost:7283/api/Favorite/deleteFavorite/7/'+item.id,
-          {
-            method: 'DELETE',
-            headers: {
-              'Access-Control-Allow-Origin': 'https://localhost:7283',
-              'Content-Type': 'application/json',
-            },
+export default function Item({item}) {
+    const {name, price, id} = item;
+
+    const [fav, setFav] = useState();
+    useEffect(() => {
+      fetch(
+        "https://localhost:7283/api/Item/1/" + id,
+        {
+          method: 'GET',
+          headers: {
+            'Access-Control-Allow-Origin': 'https://localhost:7283',
+            'Content-Type': 'application/json',
           },
-        )
-      } else {
+        },
+      )
+        .then((res) => res.json())
+        .then((r) => {
+          setFav(r);
+        });
+    }, [])
+
+    const handleAdd = () => {
         fetch(
-          'https://localhost:7283/api/Favorite/addFavorite/7/'+item.id,
+          'https://localhost:7283/api/Favorite/addFavorite/1/'+item.id,
           {
             method: 'POST',
             headers: {
@@ -29,15 +35,30 @@ export default function Item({item, favorited}) {
             body:""
           },
         )
-      }
+        setFav(!fav);
+    }
+
+    const handleDelete = () => {
+              fetch(
+          'https://localhost:7283/api/Favorite/deleteFavorite/1/'+item.id,
+          {
+            method: 'DELETE',
+            headers: {
+              'Access-Control-Allow-Origin': 'https://localhost:7283',
+              'Content-Type': 'application/json',
+            },
+          },
+        )
       setFav(!fav);
     }
+    
 
   return (
     <>
     <div>
         Name: {name}  Price: {price} 
-        <button onClick={handleOnClick} className={favorited? "favorite" : "not favorite"}>{fav ? "Delete from favorite" : "add to favorite"}</button>
+        {fav ? <button onClick={() => handleDelete()}><FaStar className="isFav"/></button> : <button onClick={() => handleAdd()}><FaStar className="isNotFav"/></button>}
+        
     </div>
     </>
   )
