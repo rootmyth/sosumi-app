@@ -4,6 +4,7 @@ import LogIn from '../pages/LogIn';
 import Routes from '../routes';
 import Main from '../pages/Menu'
 import { useAuth } from '../utils/context/authContext';
+import Register from  '../pages/Register'
 
 function Initialize() {
   const { user, userLoading } = useAuth();
