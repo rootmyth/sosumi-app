@@ -1,3 +1,11 @@
 .favorite{
     background-color: aqua;
 }
+
+.isFav{
+    fill: orange;
+}
+
+.isNotFav{
+    fill: gray;
+}

@@ -22,6 +22,35 @@ namespace sosumi_app.Repositories
             }
         }
 
+        public bool CheckIfFavoritedByUser(int userId, int itemId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [favorite]
+                                Where userId = @userId
+                                AND itemId = @itemId
+                            ";
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@itemId", itemId);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<Item> items = new List<Item>();
+                        while (reader.Read())
+                        {
+                            Item item = new Item();
+                            items.Add(item);
+                        }
+                        return items.Count > 0;
+                    }
+                }
+            }
+        }
+
         public List<Item> GetAllItems()
         {
             using (SqlConnection conn = Connection)
