@@ -12,7 +12,7 @@ export const userSidebarData = [
     },
     {
       title: 'Address',
-      path: './address',
+      path: './userAddress',
       icon: <FiMapPin />,
       className: 'nav-text'
     },

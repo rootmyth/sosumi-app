@@ -12,8 +12,8 @@ function Initialize() {
   if (userLoading) {
     return <Loading />;
   }
-  console.log(user)
-  console.log(user.$.W) // FIREBASE ID
+  // console.log(user)
+  // console.log(user.$.W) // FIREBASE ID
   //(user && user.email exists) ?
   return <>{user ? //check if the email is registered (or firebase id) if so route to <Routes user={user} /> else route to register
   <Routes user={user} /> : <LogIn />}</>;
