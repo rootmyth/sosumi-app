@@ -25,6 +25,12 @@ namespace sosumi_app.Controllers
             return returnVar;
         }
 
+        [HttpGet("{userId}/{itemId}")]
+        public Boolean Get(int userId, int itemId)
+        {
+            return _itemRepo.CheckIfFavoritedByUser(userId, itemId);
+        }
+
         // GET: api/<ItemController>
         [HttpGet("special")]
         public List<Item> GetSpecials()

@@ -7,5 +7,6 @@ namespace sosumi_app.Interfaces
         List<Item> GetAllItems();
 
         List<Item> GetSpecials();
+        bool CheckIfFavoritedByUser(int userId, int itemId);
     }
 }
