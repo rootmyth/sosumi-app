@@ -42,8 +42,8 @@ namespace sosumi_app.Controllers
         }
 
         // GET api/<OrderController>/5
-        [HttpGet("user{id}/cart")]
-        public List<Order> GetCart(int id)
+        [HttpGet("user/{id}/cart")]
+        public List<Item> GetCart(int id)
         {
             return _orderRepo.GetCartByUserId(id);
         }

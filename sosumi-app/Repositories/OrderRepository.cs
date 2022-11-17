@@ -112,7 +112,7 @@ namespace sosumi_app.Repositories
 
         }
 
-        public List<Order> GetCartByUserId(int id)
+        public List<Item> GetCartByUserId(int id)
         {
             using (SqlConnection conn = Connection)
             {
@@ -120,28 +120,28 @@ namespace sosumi_app.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                SELECT *
-                                FROM [order]
-                                WHERE userId = @id
-                                AND paid = 0
+                                select * from [item]
+                                where id in (
+                                select itemId from [orderItem]
+                                where orderId in 
+                                (SELECT id from [order] where paid = 0 and userId = @userid))
                             ";
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@userid", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        List<Order> orders = new List<Order>();
+                        List<Item> items = new List<Item>();
                         while (reader.Read())
                         {
-                            Order order = new Order()
+                            Item item = new Item()
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("id")),
-                                UserId = reader.GetInt32(reader.GetOrdinal("userId")),
-                                Date = reader.GetDateTime(reader.GetOrdinal("date")),
-                                Delivery = reader.GetBoolean(reader.GetOrdinal("dineIn")),
-                                Paid = reader.GetBoolean(reader.GetOrdinal("paid"))
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                                Price = reader.GetDouble(reader.GetOrdinal("Price")),
+                                Special = reader.GetBoolean(reader.GetOrdinal("Special"))
                             };
-                            orders.Add(order);
+                            items.Add(item);
                         }
-                        return orders;
+                        return items;
                     }
                 }
             }
