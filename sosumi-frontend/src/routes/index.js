@@ -45,7 +45,7 @@ export default function Routes({ user }) {
       <Switch>
       <Route path="/register" render={() => <Register fireBaseId={fireBaseId}/>} />
       <Route exact path="/" render ={() => <Authenticated user={user} />} />
-      <Route path="/menu" render ={() => <Menu />} />
+      <Route path="/menu" render ={() => <Menu user={user}/>} />
       <Route path="/specials" render ={() => <Specials />} />
       <Route path="/userAddress" render={() => <UserAddress />} />
       <Route path="/cart" render={() => <Cart />} />

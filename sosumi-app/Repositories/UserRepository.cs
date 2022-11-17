@@ -117,7 +117,7 @@ namespace sosumi_app.Repositories
             }
         }
 
-        public Boolean checkIfUserExists(string firebaseid)
+        public Boolean GetUserByFireBaseId(string firebaseid)
         {
             using (SqlConnection conn = Connection)
             {
@@ -152,5 +152,42 @@ namespace sosumi_app.Repositories
                 }
             }
         }
+
+        public User GetCurrentUserByFireBaseId(string firebaseid)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                SELECT *
+                                FROM [user]
+                                WHERE FireBaseId = @firebaseid
+                            ";
+                    cmd.Parameters.AddWithValue("@firebaseid", firebaseid);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<User> users = new List<User>();
+                        while (reader.Read())
+                        {
+                            User user = new User()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                                LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                                Email = reader.GetString(reader.GetOrdinal("Email")),
+                                Password = reader.GetString(reader.GetOrdinal("Password")),
+                                FirebaseId = reader.GetString(reader.GetOrdinal("FireBaseId"))
+                            };
+                            users.Add(user);
+                        }
+                        return users[0];
+                    }
+                }
+            }
+        }
     }
-}
+    }
+

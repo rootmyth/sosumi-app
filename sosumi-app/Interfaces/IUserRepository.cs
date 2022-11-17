@@ -7,6 +7,7 @@ namespace sosumi_app.Interfaces
         User GetUserById(int id);
         List<Item> GetFavoritesByUserId(int id);
         void CreateUser(User user);
-        Boolean checkIfUserExists(string firebaseid);
+        Boolean GetUserByFireBaseId(string firebaseid);
+        User GetCurrentUserByFireBaseId(string firebaseid);
     }
 }

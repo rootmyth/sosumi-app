@@ -25,7 +25,13 @@ namespace sosumi_app.Controllers
         [HttpGet("checkIfUserExists/{firebaseid}")]
         public Boolean GetUserIfExists(string firebaseid)
         {
-            return _userRepo.checkIfUserExists(firebaseid);
+            return _userRepo.GetUserByFireBaseId(firebaseid);
+        }
+
+        [HttpGet("getUserByFireBaseId/{firebaseid}")]
+        public User GetUser(string firebaseid)
+        {
+            return _userRepo.GetCurrentUserByFireBaseId(firebaseid);
         }
 
         [HttpGet("favorites/{id}")]
