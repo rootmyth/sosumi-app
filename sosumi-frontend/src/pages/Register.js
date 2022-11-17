@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useHistory } from 'react-router-dom';
 
 
-export default function Register() {
+export default function Register({fireBaseId}) {
 const [firstName, setFirstName] = useState('')
 const [lastName, setLastName] = useState('')
 const [email, setEmail] = useState('')
 const [password, setPassword] = useState('')
+const history = useHistory();
 
 const favorites = []
 
@@ -28,9 +29,11 @@ const favorites = []
             "lastName": lastName,
             "email": email,
             "password": password,
+            "FireBaseId": fireBaseId,
             "favorites": favorites
         }
         createUser(dataToSend)
+        history.push('/menu')
     }
 
     return (

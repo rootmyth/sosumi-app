@@ -10,6 +10,7 @@ function Initialize() {
   const { user, userLoading } = useAuth();
 
   // if user state is null, then show loader
+  console.log(user)
   if (userLoading) {
     return <Loading />;
   }
