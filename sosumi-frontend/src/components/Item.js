@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { FaStar } from 'react-icons/fa';
 import '../styles/item.css'
 
-export default function Item({item}) {
+export default function Item({item, currentUser}) {
     const {name, price, id} = item;
 
     const [fav, setFav] = useState();
     useEffect(() => {
       fetch(
-        "https://localhost:7283/api/Item/1/" + id,
+        "https://localhost:7283/api/Item/" + currentUser.id + "/" + id,
         {
           method: 'GET',
           headers: {
@@ -25,7 +25,7 @@ export default function Item({item}) {
 
     const handleAdd = () => {
         fetch(
-          'https://localhost:7283/api/Favorite/addFavorite/1/'+item.id,
+          'https://localhost:7283/api/Favorite/addFavorite/' + currentUser.id + '/'+item.id,
           {
             method: 'POST',
             headers: {
@@ -40,7 +40,7 @@ export default function Item({item}) {
 
     const handleDelete = () => {
               fetch(
-          'https://localhost:7283/api/Favorite/deleteFavorite/1/'+item.id,
+          'https://localhost:7283/api/Favorite/deleteFavorite/' + currentUser.id + '/' +item.id,
           {
             method: 'DELETE',
             headers: {
